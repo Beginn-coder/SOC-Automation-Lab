@@ -83,7 +83,9 @@ Once done, go back to the Wazuh dashboard and go to index patterns to create an 
 
 ![image](https://github.com/user-attachments/assets/867ad619-a5fe-4807-af3b-a9a00d780ed4)
 
-### 3.3 Integrating Shuffle (SOAR)
+## 3.3 Integrating Shuffle (SOAR)
+
+### 3.3 Part 1
 First, register an account on Shuffle’s website and establish a new workflow in the Shuffle Dashboard and name the workflow. Setup the Wazuh integration by including a webhook trigger in the workflow. 
 Go back to the wazuh server and modify the ossec.conf configuration file for Wazuh, adding the integration code 
   <integration>
@@ -107,3 +109,60 @@ We click on the person icon below, press Test Workflow. You should be able see t
 
 ![image](https://github.com/user-attachments/assets/96cc26f2-71c2-443b-a56e-d682ead047b2)
 
+We should be able to see all the information generated from Wazuh itself. Now what we will extract the SHA hash from the file and check the reputation score on VirusTotal. Since we only want to extract the hash value, we’re going to use regex. 
+Click on Change Me and select Regex capture group from the Find Actions menu, then select hashes from the Execution Argument and write regex to the proper field: SHA256=([0–9A-Fa-f]{64})
+
+![image](https://github.com/user-attachments/assets/6bc69e69-3ac0-4360-880a-7670d6171908)
+
+Now Re-run the workflow. 
+
+## Part 2: Enrichment using VirusTotal
+First, we’re going to create an account with VirusTotal to get an API key. Copy the API key and return to Shuffle. From Apps, search and select virustotal and drop/drop it to workflow. Under find actions,  select Get a hash report, then click Authenticate VirusTotal V3 and paste your API key. Then select list from Id field 
+![image](https://github.com/user-attachments/assets/f6a8da00-9c54-43e3-b59e-a7e827de708d)
+![image](https://github.com/user-attachments/assets/d4d27232-7aa1-4f51-b51a-9fcf5a4a7ba9)
+
+Then refresh the workflow and you should be able to see the results. 
+
+![image](https://github.com/user-attachments/assets/59f5d6e3-fa61-4224-a00f-95628e3853d4)
+
+Expand body → attributes → last_analysis_stats and you should be able to see how many scanners have detected the malicious file. 
+
+## 3.4 TheHive Integration
+
+## 3.4 Part 1
+Select and activate TheHive  from left menu and connect it to VirusTotal. Then login TheHive using default credentials. After login click + button at the top left corner of the page and create organization. Click to new organization to create users. Click add user and create 2 users; 1 Normal user, 1 Service user then assign password for normal user and create API key for service user. Logout from default account and login with the normal user account. Go back to Shuffle and Authenticate TheHive using API key we created before, write TheHive address to url field. 
+Do the following steps:
+    1. Find Actions → Create Alert
+    2. Title → $exec.title
+    3. Tags → [“T1003”]
+    4. Description → Mimikatz detected on host:$exec.text.win.system.computer from user:$exec.text.win.eventdata.user
+    5. Summary → Mimikatz activity detection on host: $exec.text.win.system.computer and the process ID:$exec.text.win.system.processID, Command Line: $exec.text.win.eventdata.commandLine
+    6. Severity → 2
+    7. 7. Flag → false
+    8. 8. Pap → 2
+    9. 9. Source → Wazuh
+    10. 10. Tlp → 2
+    11. 11. Sourceref → “Rule: 100002”
+    12. 12. Type → Internal
+    13. 13. Date → $exec.text.win.eventdata.utcTime
+    14. 14. Status → New
+
+
+Now it’s this point where I ran into a problem where TheHive section would timeout on me and never send the alert to TheHive dashboard as shown below. I was not able to find an answer to this issue so I moved on the final part. 
+
+![image](https://github.com/user-attachments/assets/7f181a77-8f15-4087-9acd-b6e72412f7d3)
+
+## 3.4 Part 2: Sending Email
+We will send email to our mailbox about alert Mimikatz Detected. First select email app from left menu and connect it to VirusTotal.
+![image](https://github.com/user-attachments/assets/1880de36-793d-4760-bbdb-10686162b2e9)
+
+Then we need to fill in the necessary fields:                             
+Body :
+$exec.text.win.eventdata.utcTime
+Title: $exec.title
+Host: $exec.text.win.system.computer
+User: $exec.text.win.eventdata.user
+Then run workflow
+You should receive an email for the alert. 
+
+![image](https://github.com/user-attachments/assets/5eaca868-bf5b-4896-854b-b1d84cb5be6d)
