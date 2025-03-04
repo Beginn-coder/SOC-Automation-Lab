@@ -58,3 +58,29 @@ After that, Elasticsearch configuration file by removing hashtags i.e from comme
 Once done, change owner to thehive user and thehive group over to the intend directories.
 ![image](https://github.com/user-attachments/assets/c216a202-a8c4-40f4-befd-964ec9bb07b1)
 
+After that, you’ll need to edit the application.conf file by changing host_name to theHive public server ip using nano /etc/thehive/application.conf. Ensure the cluster.name matches what you set in Cassandra.yaml and change the application.baseUrl variable to your public ip. Save and restart the service. 
+To access TheHive interface, open a browser and navigate to http://(your_hive_server_ip:9000). If you get an authentication error, check to see if elasticsearch is running. If it’s running, then you’ll need to create a custom jvm file, nano /etc/elasticsearch/jvm.options.d/jvm.options and paste in the following: 
+-Dlog4j2.formatMsgNoLookups=true
+-Xms2g
+-Xmx2g
+Save the file and restart the service. 
+
+### 3.2: Step 4: Configuring Wazuh Dashboard
+For this part, you’ll want to head to your windows 10 vm, enter the ip address of your wazuh server and login. Select add agents, use the public ip for the server address, create an agent name(optional), and copy the powershell command. Open powershell as admin, paste the command in and press enter. To check, run net start wazuhsvc. 
+
+### 3.2: Step 5: Mimikatz Telemetry Overview into Wazuh & Custom Alert
+For this section, first, we want to edit the ossec.conf file on our windows machine by running notepad in admin mode. We are going to delete the application, system, and security configuration from the local file. This implies that only Sysmon will be able to relay events to our Wazuh management. Your ossec file should look like the image below
+
+![image](https://github.com/user-attachments/assets/8d4f75c7-3ded-4845-89cb-90ffdbb20851)
+
+Now we can add an exemption in Windows for our downloads folder so that we can download and extract mimikatz. Run powershell as admin and go into your downloads folder to run the mimikatz application. 
+
+copy the ossec configuration file to the ossec home directory, cp /var/ossec/etc/ossec.conf ~/ossec-backup.conf. Now you can run nano /var/ossec/etc/ossec.conf to edit the file. Once in, change the logall and alerts_log variables to yes, save the file and restart the wazuh-manager.service. Then go to the /var/ossec/logs/archives/ directory and edit the etc/nano/filebeat/filebeat.yml so that the archives variable is set to true. It should look like the image below. 
+
+![image](https://github.com/user-attachments/assets/38336d46-6aaa-40e8-8a83-c6b31179745b)
+
+Once done, go back to the Wazuh dashboard and go to index patterns to create an index for the archives. Return to the dashboard and go to management and select rule, then manage rule files and search Sysmon and select custom rules. Create a custom rule as shown in the image below
+
+![image](https://github.com/user-attachments/assets/867ad619-a5fe-4807-af3b-a9a00d780ed4)
+
+
