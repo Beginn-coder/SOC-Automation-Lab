@@ -5,7 +5,7 @@ Acknowledgement: This project benefitted greatly from the tutorial provided by t
 ## 1. Introduction
 
 ### 1.1 Overview
-This project aims to develop an automated SOC homelab, highly inspired by MyDFIR’s youtube series on the same topic. The full playlist can be found at [SOC Automation Project[(https://www.youtube.com/watch?v=XR3eamn8ydQ). In today’s rapidly changing cybersecurity environment, the importance of having a strong Security Operation Center (SOCs) has never been greater. As cyber threats grow more advanced, organizations must constantly evolve and improve their detection and response capabilities to protect their assets and data. For aspiring SOC analysts, one method is to build a fully automated SOC homelab to hone their skills in a controlled environment. 
+This project aims to develop an automated SOC homelab, highly inspired by MyDFIR’s youtube series on the same topic. The full playlist can be found at [SOC Automation Project](https://www.youtube.com/watch?v=XR3eamn8ydQ). In today’s rapidly changing cybersecurity environment, the importance of having a strong Security Operation Center (SOCs) has never been greater. As cyber threats grow more advanced, organizations must constantly evolve and improve their detection and response capabilities to protect their assets and data. For aspiring SOC analysts, one method is to build a fully automated SOC homelab to hone their skills in a controlled environment. 
 
 ### 1.2 Objectives
 - **Hands-on Experience- The primary objective of this project is to provide oneself with hands-on experience in setting up, configuring, and operating a Security Operations Center in a simulated environment.
