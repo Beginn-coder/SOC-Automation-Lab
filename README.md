@@ -169,3 +169,21 @@ Then run workflow
 You should receive an email for the alert. 
 
 ![image](https://github.com/user-attachments/assets/5eaca868-bf5b-4896-854b-b1d84cb5be6d)
+
+### Part 4: Conclusion
+Our SOC automation Lab has been successfully setup and configured,  integrating Wazuh, TheHive, and Shuffle for automated event monitoring, alerting, and incident response. This foundation provides a solid starting point for further customization and expansion of automation workflows to meet our specific SOC requirements.
+The key steps and achievements of this lab include:
+
+1. Installing and configuring a Windows 10 client with Sysmon for detailed event generation.
+2. Setting up Wazuh as the central event management and alerting platform.
+3. Installing and configuring TheHive for case management and coordinated response actions.
+4. Generating Mimikatz telemetry and creating custom alerts in Wazuh.
+5. Integrating Shuffle as the SOAR platform for workflow automation.
+6. Building an automated workflow to extract file hashes, check reputation scores with VirusTotal, create alerts in TheHive, and notify SOC analysts via email.
+
+With this lab, we have gained hands-on experience in implementing an automated SOC workflow using powerful open-source tools. We can now leverage this knowledge to enhance your organization's security operations, improve incident response times, and streamline SOC processes.
+
+
+## Part 5. References
+- https://www.mydfir.com/
+- https://www.youtube.com/watch?v=Lb_ukgtYK_U
