@@ -38,3 +38,7 @@ To begin with, you are going to want create a Windows 10 .iso file. This can be 
 
 ### 3.2: Step 2: Installing and Configuring Wazuh
 For this part, you’ll want to create an account on DigitalOcean. If you’re a student in university, I recommend signing up for Github Education as you’ll will receive $200 in free credits for DigitalOcean which will be more than enough. For my droplet, I went with Ubuntu 22.04 for the OS and $48/mo plan and created an ssh key for sign in purposes. Once done, you’ll need to set up the firewall for the Wazuh server. The inbound rules should allow all TCP/UDP connections to your public ip.   To connect, use either through the droplet console or via ssh through the droplet ip.  
+![image](https://github.com/user-attachments/assets/2b905af7-975f-49ee-93aa-85e0bd809b54)
+
+Once created, run apt-get update && apt-get upgrade -y. You’ll be asked about which services to update, but you can skip them. 
+To install Wazuh, use the following command: curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a. If all goes well, you should see the username and password for the wazuh server. Copy it to a safe place, go back into your win10 vm and use the public ip of the wazuh along with the admin account(http://your_droplet_ip). You should be able to login but if not use systemctl status wazuh.manager-system to check if wazuh is running.
