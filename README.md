@@ -41,4 +41,19 @@ For this part, you’ll want to create an account on DigitalOcean. If you’re a
 ![image](https://github.com/user-attachments/assets/2b905af7-975f-49ee-93aa-85e0bd809b54)
 
 Once created, run apt-get update && apt-get upgrade -y. You’ll be asked about which services to update, but you can skip them. 
-To install Wazuh, use the following command: curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a. If all goes well, you should see the username and password for the wazuh server. Copy it to a safe place, go back into your win10 vm and use the public ip of the wazuh along with the admin account(http://your_droplet_ip). You should be able to login but if not use systemctl status wazuh.manager-system to check if wazuh is running.
+To install Wazuh, use the following command: curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a. If all goes well, you should see the username and password for the wazuh server. Copy it to a safe place, go back into your win10 vm and use the public ip of the wazuh along with the admin account(http://your_droplet_ip). You should be able to login but if you're unable to, use systemctl status wazuh.manager-system to check if wazuh is running.
+
+### 3.2: Step 3: Setting up The Hive
+To begin, use the same configuration as the Wazuh server and install TheHive using [Github link](https://github.com/MyDFIR/SOC-Automation-Project). 
+Once done, you’ll need to configure Cassandra by editing the configuration file nano /etc/cassandra/cassandra.yaml. You’ll need to set the cluster-name, the listen_address and the rpc_address to the TheHive IP address, and the seed_provider to TheHive public IP. Save the file, stop the service and remove old files in /var/lib/Cassandra/* using rm -rf. Once done, run systemctl start cassandra.service.  
+After that, Elasticsearch configuration file by removing hashtags i.e from comment to code. You'll want to uncomment the following:
+
+-cluster.name: Set to thehive
+-node.name- this can be node1
+-network.host: Set to your server’s public IP
+-http.port (optional because by default it’s 9200)
+
+![image](https://github.com/user-attachments/assets/8ba8da77-85fd-4165-852a-a994cb600ed4)
+Once done, change owner to thehive user and thehive group over to the intend directories.
+![image](https://github.com/user-attachments/assets/c216a202-a8c4-40f4-befd-964ec9bb07b1)
+
