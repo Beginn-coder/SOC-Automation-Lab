@@ -130,7 +130,10 @@ Expand body → attributes → last_analysis_stats and you should be able to see
 ## 3.4 TheHive Integration
 
 ## 3.4 Part 1
-Select and activate TheHive  from left menu and connect it to VirusTotal. Then login TheHive using default credentials. After login click + button at the top left corner of the page and create organization. Click to new organization to create users. Click add user and create 2 users; 1 Normal user, 1 Service user then assign password for normal user and create API key for service user. Logout from default account and login with the normal user account. Go back to Shuffle and Authenticate TheHive using API key we created before, write TheHive address to url field. 
+Select and activate TheHive  from left menu and connect it to VirusTotal. Then login TheHive using default credentials. After login click + button at the top left corner of the page and create organization. Click to new organization to create users. Click add user and create 2 users; 1 Normal user, 1 Service user then assign password for normal user and create API key for service user. 
+Logout from default account and login with the normal user account. 
+Go back to Shuffle and Authenticate TheHive using API key we created before, write TheHive address to url field. 
+
 Do the following steps:
     1. Find Actions → Create Alert
     2. Title → $exec.title
