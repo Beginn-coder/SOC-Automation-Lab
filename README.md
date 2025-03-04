@@ -83,4 +83,27 @@ Once done, go back to the Wazuh dashboard and go to index patterns to create an 
 
 ![image](https://github.com/user-attachments/assets/867ad619-a5fe-4807-af3b-a9a00d780ed4)
 
+### 3.3 Integrating Shuffle (SOAR)
+First, register an account on Shuffle’s website and establish a new workflow in the Shuffle Dashboard and name the workflow. Setup the Wazuh integration by including a webhook trigger in the workflow. 
+Go back to the wazuh server and modify the ossec.conf configuration file for Wazuh, adding the integration code 
+  <integration>
+    <name> </name>
+    <hook_url>YOUR_WEBHOOK_URL_HERE </hook_url>
+    <alert_format>json</alert_format>
+    <rule_id>100002</rule_id>
+  </integration>
+Replace YOUR_SHUFFLE_WEBHOOK_URI with the URI you copied from Shuffle. Restart Wazuh by running  systemctl restart wazuh-manager.
+
+Note: When adding tags, pay attention to the indentation to ensure they align with other lines
+The image below shows an example of this 
+
+![image](https://github.com/user-attachments/assets/1149b241-6c7c-42bc-83a8-31e10aff0b3b)
+
+Then rerun Mimikatz on the windows machine. Afterwards, return to Shuffle and start the process 
+
+![image](https://github.com/user-attachments/assets/e55aecc2-ef42-4ee6-b24a-f121c241bdf0)
+
+We click on the person icon below, press Test Workflow. You should be able see the execution and click execution argument.
+
+![image](https://github.com/user-attachments/assets/96cc26f2-71c2-443b-a56e-d682ead047b2)
 
