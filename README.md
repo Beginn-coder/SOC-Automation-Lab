@@ -54,6 +54,7 @@ After that, Elasticsearch configuration file by removing hashtags i.e from comme
 -http.port (optional because by default it’s 9200)
 
 ![image](https://github.com/user-attachments/assets/8ba8da77-85fd-4165-852a-a994cb600ed4)
+
 Once done, change owner to thehive user and thehive group over to the intend directories.
 ![image](https://github.com/user-attachments/assets/c216a202-a8c4-40f4-befd-964ec9bb07b1)
 
